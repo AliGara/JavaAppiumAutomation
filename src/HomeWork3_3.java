@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
+
 public class HomeWork3_3 {
     private AppiumDriver driver;
 
@@ -42,30 +44,22 @@ public class HomeWork3_3 {
                 5
         );
 
-
-    waitForElementAndSendKeys(
+        waitForElementAndSendKeys(
         By.xpath("//*[contains(@text, 'Search…')]"),
                 "QA",
                 "Cannot find search input",
                 15
           );
 
-        waitForElementPresent(
-                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = 'QA']"),
-                "Cannot find 'QA' topic searching by 'QA'",
-                20
+        String search_result_locator = "org.wikipedia:id/page_list_item_container";
+
+        int amount_of_search_results = getAmountOfElements(
+                By.id(search_result_locator)
         );
 
-        waitForElementPresent(
-            By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = 'Qatar']"),
-            "Cannot find 'Qatar' topic searching by 'QA'",
-            5
-        );
-
-        waitForElementAndClear(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Cannot find search field",
-                5
+        Assert.assertTrue(
+                "Few articles found",
+                amount_of_search_results > 1
         );
 
         waitForElementAndClick(
@@ -74,11 +68,15 @@ public class HomeWork3_3 {
                 5
         );
 
-        waitForElementNotPresent(
-                By.id("org.wikipedia:id/search_close_btn"),
-                "X is still present on the page",
-                5
+        int amount_of_search_results_after_clear = getAmountOfElements(
+                By.id(search_result_locator)
         );
+
+        Assert.assertTrue(
+                "Articles found",
+                amount_of_search_results_after_clear < 1
+        );
+
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
@@ -113,5 +111,10 @@ public class HomeWork3_3 {
         return wait.until(
                 ExpectedConditions.invisibilityOfElementLocated(by)
         );
+    }
+
+    private int getAmountOfElements (By by) {
+        List elements = driver.findElements(by);
+        return elements.size();
     }
 }
