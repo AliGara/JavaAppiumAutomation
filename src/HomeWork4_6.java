@@ -45,13 +45,13 @@ public class HomeWork4_6 {
 
         waitForElementAndSendKeys(
                 By.xpath("//*[contains(@text, 'Search…')]"),
-                "QA",
+                "Java",
                 "Cannot find search input",
                 15
         );
 
         waitForElementAndClick(
-                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_title'][@text = 'QA']"),
+                By.xpath("//*[@resource-id = 'org.wikipedia:id/page_list_item_container']//*[@text = 'Object-oriented programming language']"),
                 "No articles found on request 'QA'",
                 15
         );

@@ -38,23 +38,25 @@ public class HomeWork3_2 {
     public void testCompareArticleTitle() {
 
         assertElementHasText(
-                "//*[contains(@text, 'Search Wikipedia')]",
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
                 "Search Wikipedia",
                 "We see unexpected title"
         );
     }
 
-    private WebElement waitForElementPresent(String xpath, String error_message, long timeoutInSeconds) {
+    // Метод поиска элемента с ожиданием
+    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
-        By by = By.xpath(xpath);
+//        By by = By.xpath(xpath);
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
     }
 
-    private void assertElementHasText(String xpath, String expected_title, String error_message) {
-        WebElement element_to_init_search = waitForElementPresent(xpath, "Element not found", 15);
+    // Метод сравнения текста в найденном элементе с ожидаемым текстом
+    private void assertElementHasText(By by, String expected_title, String error_message) {
+        WebElement element_to_init_search = waitForElementPresent(by, "Element not found", 15);
         String article_title = element_to_init_search.getAttribute("text");
         Assert.assertEquals(
                 error_message,

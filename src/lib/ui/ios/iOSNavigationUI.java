@@ -1,2 +1,15 @@
-package lib.ui.ios;public class iOSNavigationUI {
+package lib.ui.ios;
+
+import io.appium.java_client.AppiumDriver;
+import lib.ui.NavigationUI;
+
+public class iOSNavigationUI extends NavigationUI {
+    static {
+        MY_LISTS_LINK = "id:Saved";
+        WINDOW_CLOSE = "id:Close";
+    }
+
+    public iOSNavigationUI(AppiumDriver driver){
+        super(driver);
+    }
 }
