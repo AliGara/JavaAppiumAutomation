@@ -33,7 +33,10 @@ public class MyListsTest extends CoreTestCase {
         }
 
         ArticlePageObject.closeArticle();
-        SearchPageObject.clickCancelSearch();
+
+        if (Platform.getInstance().isIOS()) {
+            SearchPageObject.clickCancelSearch();
+        }
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.clickMyLists();

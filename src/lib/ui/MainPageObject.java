@@ -128,6 +128,22 @@ public class MainPageObject {
         return element_location_by_y < screen_size_by_y; //Скроллим пока элемент не будет найден
     }
 
+    public void clickElementToTheRightUpperCorner (String locator, String error_message){
+        WebElement element = this.waitForElementPresent(locator + "/..", error_message); // Для перехода к локатору уровнем выше
+        int right_x = element.getLocation().getX();
+        int upper_y = element.getLocation().getY();
+        int lower_y = upper_y + element.getSize().getHeight();
+        int middle_y = (upper_y + lower_y) / 2;
+        int width = element.getSize().getWidth();
+
+        int point_to_click_x = (right_x + width) - 3; // Находим точку на 3 пикселя левее, чем ширина элемента
+        int point_to_click_y = middle_y; // Точка по оси Y находится ровно по середине элемента
+
+        TouchAction action = new TouchAction(driver);
+        action.tap(PointOption.point(point_to_click_x, point_to_click_y)).perform();
+
+    }
+
     // Метод свайпа влево
     public void swipeElementToLeft (String locator, String error_message) {
         WebElement element = waitForElementPresent(
